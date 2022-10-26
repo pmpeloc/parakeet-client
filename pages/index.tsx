@@ -1,30 +1,21 @@
 import type { NextPage } from 'next';
-import { Card, CardHeader, Grid } from '@mui/material';
+import { Card as CardMui, CardHeader, Grid } from '@mui/material';
 import { MainLayout } from '../components/layouts';
+import { Card } from '../components/ui';
+import { parseToNumber } from '../utils';
+import * as dataJson from '../mock/data.json';
+
+const dataMock = parseToNumber(dataJson.products);
 
 const HomePage: NextPage = () => {
   return (
     <MainLayout title='Inicio - Parakeet'>
       <Grid container spacing={2}>
-        <Grid item xs={12} sm={4}>
-          <Card sx={{ height: 'calc(100vh - 100px)' }}>
-            <CardHeader title='Pendientes' />
-            {/* <NewEntry /> */}
-            {/* <EntryList status='pending' /> */}
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Card sx={{ height: 'calc(100vh - 100px)' }}>
-            <CardHeader title='En Progreso' />
-            {/* <EntryList status='in-progress' /> */}
-          </Card>
-        </Grid>
-        <Grid item xs={12} sm={4}>
-          <Card sx={{ height: 'calc(100vh - 100px)' }}>
-            <CardHeader title='Completadas' />
-            {/* <EntryList status='finished' /> */}
-          </Card>
-        </Grid>
+        {dataMock.map((product, index) => (
+          <Grid key={index} item xs={12} sm={4} md={3}>
+            <Card data={product} />
+          </Grid>
+        ))}
       </Grid>
     </MainLayout>
   );
